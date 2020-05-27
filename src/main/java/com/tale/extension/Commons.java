@@ -54,6 +54,10 @@ public final class Commons {
         return site_url("");
     }
 
+    public static String option(String opt) {
+        return site_option(opt);
+    }
+
     /**
      * 返回当前主题名称
      *
