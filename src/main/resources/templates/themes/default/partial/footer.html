@@ -9,7 +9,12 @@
             <div class="meta-item meta-copyright">
                 <div class="meta-copyright-info">
                     <a href="${site_url()}" class="info-logo">
-                        <img src="/templates/themes/default/static/img/logo.png" alt="${site_title()}">
+                        <!--<img src="/templates/themes/default/static/img/logo.png" alt="${site_title()}">-->
+                        #if(theme_option('logo_url') == "")
+                        <img src="${theme_url('/static/img/logo.png')}" alt="${site_title()}"/>
+                        #else
+                        <img src="${theme_option('logo_url')}" alt="${site_title()}"/>
+                        #end
                     </a>
                     <div class="info-text">
                         <h2>${option('site_subtitle')}</h2>
