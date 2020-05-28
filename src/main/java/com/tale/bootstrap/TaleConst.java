@@ -53,7 +53,7 @@ public class TaleConst {
     /**
      * 上传文件最大20M
      */
-    public static Integer MAX_FILE_SIZE = 409600;
+    public static Integer MAX_FILE_SIZE = 40960;
 
     /**
      * 要过滤的ip列表
