@@ -15,6 +15,7 @@ import com.tale.utils.MapCache;
 import com.tale.utils.TaleUtils;
 import io.github.biezhi.anima.enums.OrderBy;
 import io.github.biezhi.anima.page.Page;
+import jetbrick.util.StringUtils;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -50,8 +51,26 @@ public class SiteService {
         users.setPassword(pwd);
         users.setScreenName(users.getUsername());
         users.setCreated(DateKit.nowUnix());
-        Integer uid = users.save().asInt();
-
+        Integer uid = null;
+        long count = new Users().where("username", users.getUsername()).count();
+        if (count < 1) {
+            //todo 如果不存在这个用户，走添加逻辑
+            uid = users.save().asInt();
+        }else{
+            //todo 如果存在，先判断密码是否相同
+            Users oldUser = select().from(Users.class)
+                    .where(Users::getUsername, users.getUsername())
+                    .and(Users::getPassword, pwd)
+                    .one();
+            if (oldUser != null) {
+                //todo 密码相同，走修改逻辑
+                users.setUid(oldUser.getUid());
+                users.update();
+            }else{
+                //todo 密码不同，提示用户已存在
+                throw new ValidatorException("安装失败，该用户已存在");
+            }
+        }
         try {
             String cp   = SiteService.class.getClassLoader().getResource("").getPath();
             File   lock = new File(cp + "install.lock");

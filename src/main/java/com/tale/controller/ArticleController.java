@@ -99,55 +99,56 @@ public class ArticleController extends BaseController {
     @JSON
     public RestResponse<?> comment(Request request, Response response,
                                    @HeaderParam String Referer, Comments comments) {
-
-        if (StringKit.isBlank(Referer)) {
-            return RestResponse.fail(ErrorCode.BAD_REQUEST);
-        }
-
-        if (!Referer.startsWith(Commons.site_url())) {
-            return RestResponse.fail("非法评论来源");
-        }
         try {
-            CommonValidator.valid(comments);
+            if (StringKit.isBlank(Referer)) {
+                return RestResponse.fail(ErrorCode.BAD_REQUEST);
+            }
+
+            if (!Referer.startsWith(Commons.site_url())) {
+                return RestResponse.fail("非法评论来源");
+            }
+
+                CommonValidator.valid(comments);
+
+
+            String  val   = request.address() + ":" + comments.getCid();
+            Integer count = cache.hget(Types.COMMENTS_FREQUENCY, val);
+            if (null != count && count > 0) {
+                return RestResponse.fail("您发表评论太快了，请过会再试");
+            }
+            comments.setIp(request.address());
+            comments.setAgent(request.userAgent());
+
+            if (TaleConst.OPTIONS.getBoolean(OPTION_ALLOW_COMMENT_AUDIT, true)) {
+                comments.setStatus(COMMENT_NO_AUDIT);
+            } else {
+                comments.setStatus(COMMENT_APPROVED);
+            }
+
+            try {
+                commentsService.saveComment(comments);
+                response.cookie("tale_remember_author", URLEncoder.encode(comments.getAuthor(), "UTF-8"), 7 * 24 * 60 * 60);
+                response.cookie("tale_remember_mail", URLEncoder.encode(comments.getMail(), "UTF-8"), 7 * 24 * 60 * 60);
+                if (StringKit.isNotBlank(comments.getUrl())) {
+                    response.cookie("tale_remember_url", URLEncoder.encode(comments.getUrl(), "UTF-8"), 7 * 24 * 60 * 60);
+                }
+
+                // 设置对每个文章30秒可以评论一次
+                cache.hset(Types.COMMENTS_FREQUENCY, val, 1, 30);
+                siteService.cleanCache(Types.SYS_STATISTICS);
+
+                return RestResponse.ok();
+            } catch (Exception e) {
+                String msg = "评论发布失败";
+                if (e instanceof ValidatorException) {
+                    msg = e.getMessage();
+                } else {
+                    log.error(msg, e);
+                }
+                return RestResponse.fail(msg);
+            }
         } catch (Exception e) {
             return RestResponse.fail(e.getMessage());
-        }
-
-        String  val   = request.address() + ":" + comments.getCid();
-        Integer count = cache.hget(Types.COMMENTS_FREQUENCY, val);
-        if (null != count && count > 0) {
-            return RestResponse.fail("您发表评论太快了，请过会再试");
-        }
-        comments.setIp(request.address());
-        comments.setAgent(request.userAgent());
-
-        if (TaleConst.OPTIONS.getBoolean(OPTION_ALLOW_COMMENT_AUDIT, true)) {
-            comments.setStatus(COMMENT_NO_AUDIT);
-        } else {
-            comments.setStatus(COMMENT_APPROVED);
-        }
-
-        try {
-            commentsService.saveComment(comments);
-            response.cookie("tale_remember_author", URLEncoder.encode(comments.getAuthor(), "UTF-8"), 7 * 24 * 60 * 60);
-            response.cookie("tale_remember_mail", URLEncoder.encode(comments.getMail(), "UTF-8"), 7 * 24 * 60 * 60);
-            if (StringKit.isNotBlank(comments.getUrl())) {
-                response.cookie("tale_remember_url", URLEncoder.encode(comments.getUrl(), "UTF-8"), 7 * 24 * 60 * 60);
-            }
-
-            // 设置对每个文章30秒可以评论一次
-            cache.hset(Types.COMMENTS_FREQUENCY, val, 1, 30);
-            siteService.cleanCache(Types.SYS_STATISTICS);
-
-            return RestResponse.ok();
-        } catch (Exception e) {
-            String msg = "评论发布失败";
-            if (e instanceof ValidatorException) {
-                msg = e.getMessage();
-            } else {
-                log.error(msg, e);
-            }
-            return RestResponse.fail(msg);
         }
     }
 

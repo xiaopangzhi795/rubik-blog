@@ -87,21 +87,25 @@ public class AdminApiController extends BaseController {
 
     @PostRoute("article/new")
     public RestResponse newArticle(@BodyParam Contents contents) {
-        CommonValidator.valid(contents);
+        try {
+            CommonValidator.valid(contents);
 
-        Users users = this.user();
-        contents.setType(Types.ARTICLE);
-        contents.setAuthorId(users.getUid());
-        //将点击数设初始化为0
-        contents.setHits(0);
-        //将评论数设初始化为0
-        contents.setCommentsNum(0);
-        if (StringKit.isBlank(contents.getCategories())) {
-            contents.setCategories("默认分类");
+            Users users = this.user();
+            contents.setType(Types.ARTICLE);
+            contents.setAuthorId(users.getUid());
+            //将点击数设初始化为0
+            contents.setHits(0);
+            //将评论数设初始化为0
+            contents.setCommentsNum(0);
+            if (StringKit.isBlank(contents.getCategories())) {
+                contents.setCategories("默认分类");
+            }
+            Integer cid = contentsService.publish(contents);
+            siteService.cleanCache(Types.SYS_STATISTICS);
+            return RestResponse.ok(cid);
+        } catch (Exception e) {
+            return RestResponse.fail(e.getMessage());
         }
-        Integer cid = contentsService.publish(contents);
-        siteService.cleanCache(Types.SYS_STATISTICS);
-        return RestResponse.ok(cid);
     }
 
     @PostRoute("article/delete/:cid")
@@ -113,13 +117,17 @@ public class AdminApiController extends BaseController {
 
     @PostRoute("article/update")
     public RestResponse updateArticle(@BodyParam Contents contents) {
-        if (null == contents || null == contents.getCid()) {
-            return RestResponse.fail("缺少参数，请重试");
+        try {
+            if (null == contents || null == contents.getCid()) {
+                return RestResponse.fail("缺少参数，请重试");
+            }
+            CommonValidator.valid(contents);
+            Integer cid = contents.getCid();
+            contentsService.updateArticle(contents);
+            return RestResponse.ok(cid);
+        } catch (Exception e) {
+            return RestResponse.fail(e.getMessage());
         }
-        CommonValidator.valid(contents);
-        Integer cid = contents.getCid();
-        contentsService.updateArticle(contents);
-        return RestResponse.ok(cid);
     }
 
     @GetRoute("articles")
@@ -142,29 +150,37 @@ public class AdminApiController extends BaseController {
     @PostRoute("page/new")
     public RestResponse<?> newPage(@BodyParam Contents contents) {
 
-        CommonValidator.valid(contents);
+        try {
+            CommonValidator.valid(contents);
 
-        Users users = this.user();
-        contents.setType(Types.PAGE);
-        contents.setAllowPing(true);
-        contents.setAuthorId(users.getUid());
-        contentsService.publish(contents);
-        siteService.cleanCache(Types.SYS_STATISTICS);
-        return RestResponse.ok();
+            Users users = this.user();
+            contents.setType(Types.PAGE);
+            contents.setAllowPing(true);
+            contents.setAuthorId(users.getUid());
+            contentsService.publish(contents);
+            siteService.cleanCache(Types.SYS_STATISTICS);
+            return RestResponse.ok();
+        } catch (Exception e) {
+            return RestResponse.fail(e.getMessage());
+        }
     }
 
     @SysLog("修改页面")
     @PostRoute("page/update")
     public RestResponse<?> updatePage(@BodyParam Contents contents) {
-        CommonValidator.valid(contents);
+        try {
+            CommonValidator.valid(contents);
 
-        if (null == contents.getCid()) {
-            return RestResponse.fail("缺少参数，请重试");
+            if (null == contents.getCid()) {
+                return RestResponse.fail("缺少参数，请重试");
+            }
+            Integer cid = contents.getCid();
+            contents.setType(Types.PAGE);
+            contentsService.updateArticle(contents);
+            return RestResponse.ok(cid);
+        } catch (Exception e) {
+            return RestResponse.fail(e.getMessage());
         }
-        Integer cid = contents.getCid();
-        contents.setType(Types.PAGE);
-        contentsService.updateArticle(contents);
-        return RestResponse.ok(cid);
     }
 
     @GetRoute("categories")
@@ -221,29 +237,33 @@ public class AdminApiController extends BaseController {
     @SysLog("回复评论")
     @PostRoute("comment/reply")
     public RestResponse<?> replyComment(@BodyParam Comments comments, Request request) {
-        CommonValidator.validAdmin(comments);
+        try {
+            CommonValidator.validAdmin(comments);
 
-        Comments c = select().from(Comments.class).byId(comments.getCoid());
-        if (null == c) {
-            return RestResponse.fail("不存在该评论");
-        }
-        Users users = this.user();
-        comments.setAuthor(users.getUsername());
-        comments.setAuthorId(users.getUid());
-        comments.setCid(c.getCid());
-        comments.setIp(request.address());
-        comments.setUrl(users.getHomeUrl());
+            Comments c = select().from(Comments.class).byId(comments.getCoid());
+            if (null == c) {
+                return RestResponse.fail("不存在该评论");
+            }
+            Users users = this.user();
+            comments.setAuthor(users.getUsername());
+            comments.setAuthorId(users.getUid());
+            comments.setCid(c.getCid());
+            comments.setIp(request.address());
+            comments.setUrl(users.getHomeUrl());
 
-        if (StringKit.isNotBlank(users.getEmail())) {
-            comments.setMail(users.getEmail());
-        } else {
-            comments.setMail("");
+            if (StringKit.isNotBlank(users.getEmail())) {
+                comments.setMail(users.getEmail());
+            } else {
+                comments.setMail("");
+            }
+            comments.setStatus(TaleConst.COMMENT_APPROVED);
+            comments.setParent(comments.getCoid());
+            commentsService.saveComment(comments);
+            siteService.cleanCache(Types.SYS_STATISTICS);
+            return RestResponse.ok();
+        } catch (Exception e) {
+            return RestResponse.fail(e.getMessage());
         }
-        comments.setStatus(TaleConst.COMMENT_APPROVED);
-        comments.setParent(comments.getCoid());
-        commentsService.saveComment(comments);
-        siteService.cleanCache(Types.SYS_STATISTICS);
-        return RestResponse.ok();
     }
 
     @GetRoute("attaches")

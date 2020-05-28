@@ -48,26 +48,30 @@ public class InstallController extends BaseController {
     @PostRoute
     @JSON
     public RestResponse<?> doInstall(InstallParam installParam) {
-        if (isRepeatInstall()) {
-            return RestResponse.fail("请勿重复安装");
+        try {
+            if (isRepeatInstall()) {
+                return RestResponse.fail("请勿重复安装");
+            }
+
+            CommonValidator.valid(installParam);
+
+            Users temp = new Users();
+            temp.setUsername(installParam.getAdminUser());
+            temp.setPassword(installParam.getAdminPwd());
+            temp.setEmail(installParam.getAdminEmail());
+
+            siteService.initSite(temp);
+
+            String siteUrl = TaleUtils.buildURL(installParam.getSiteUrl());
+            optionsService.saveOption("site_title", installParam.getSiteTitle());
+            optionsService.saveOption("site_url", siteUrl);
+
+            TaleConst.OPTIONS = Environment.of(optionsService.getOptions());
+
+            return RestResponse.ok();
+        } catch (Exception e) {
+            return RestResponse.fail(e.getMessage());
         }
-
-        CommonValidator.valid(installParam);
-
-        Users temp = new Users();
-        temp.setUsername(installParam.getAdminUser());
-        temp.setPassword(installParam.getAdminPwd());
-        temp.setEmail(installParam.getAdminEmail());
-
-        siteService.initSite(temp);
-
-        String siteUrl = TaleUtils.buildURL(installParam.getSiteUrl());
-        optionsService.saveOption("site_title", installParam.getSiteTitle());
-        optionsService.saveOption("site_url", siteUrl);
-
-        TaleConst.OPTIONS = Environment.of(optionsService.getOptions());
-
-        return RestResponse.ok();
     }
 
     private boolean isRepeatInstall() {
