@@ -107,8 +107,11 @@ public class ArticleController extends BaseController {
         if (!Referer.startsWith(Commons.site_url())) {
             return RestResponse.fail("非法评论来源");
         }
-
-        CommonValidator.valid(comments);
+        try {
+            CommonValidator.valid(comments);
+        } catch (Exception e) {
+            return RestResponse.fail(e.getMessage());
+        }
 
         String  val   = request.address() + ":" + comments.getCid();
         Integer count = cache.hget(Types.COMMENTS_FREQUENCY, val);
