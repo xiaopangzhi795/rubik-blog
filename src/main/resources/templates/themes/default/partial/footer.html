@@ -129,10 +129,18 @@
                     li = document.createElement('li');
                     link = document.createElement('a');
                     link.href = '#' + titleId[i];
-                    link.innerHTML = !isDirNum ? contentArr[i] :
-                        dirNum.join('.') + ' ' + contentArr[i] ;
+                    // link.innerHTML = !isDirNum ? contentArr[i] :
+                    //     dirNum.join('.') + ' ' + contentArr[i] ;
+                    link.innerHTML = '📌' +
+                         ' ' + contentArr[i];
                     li.appendChild(link);
                     currentList.appendChild(li);
+                }
+                console.log("来喽来喽")
+                console.log(root)
+                console.log(root.childNodes.length)
+                if (root.childNodes.length > 0) {
+                    $('#directory').html("<span><a href='#'>本页目录</a></span>")
                 }
                 directory.appendChild(root);
             };
