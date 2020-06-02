@@ -26,7 +26,6 @@
             <artifactId>blade-mvc</artifactId>
             <version>${blade-mvc.version}</version>
         </dependency>
-
         <!-- 数据库操作 -->
         <dependency>
             <groupId>org.xerial</groupId>
