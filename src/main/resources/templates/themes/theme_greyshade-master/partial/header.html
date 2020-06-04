@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-transform"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="keywords" content="${meta_keywords()}" />
+
+    <link rel="shortcut icon" href="${theme_url('/static/img/favicon.png')}"/>
+    <link rel="apple-touch-icon" href="${theme_url('/static/img/apple-touch-icon.png')}"/>
+    <link href="${theme_url('/static/css/default.min.css')}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    #if(allow_cloud_CDN() == "true")
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    #else
+    <script src="/static/admin/plugins/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/admin/css/font-awesome.min.css">
+    #end
+    <![endif]-->
+    <link rel="shortcut icon" href="${theme_url('/static/images/avatar.png')}">
+    <link rel="stylesheet" href="${theme_url('/static/css/style.css')}">
+    <title>${head_title()}</title>
+</head>
+<body>
+<!--[if lt IE 9]>
+<div class="browsehappy" role="dialog">你正在使用一个过时的浏览器，为了正常的访问, 请<a href="http://browsehappy.com/" target="_blank">升级你的浏览器</a>以查看此页面。</div>
+<![endif]-->
+<div class="container">
+    <div class="left-col" style="background-image: url(${theme_url('/static/images/')}left-bg${random(4, '.jpg')}); background-size: cover;">
+        <header id="header">
+            <div class="profilepic"><a href="/" style="background-image: url(${theme_url('/static/images/apple-touch-icon.png')});"></a></div>
+            <h1><a href="/">${site_title()}</a></h1>
+            <p class="subtitle">${site_description()}</p>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="/"><i class="iconfont icon-home"></i>首页</a></li>
+                    <li><a href="${site_url('/tag')}"><i class="iconfont icon-collect"></i>分类</a></li>
+                    <li><a href="${site_url('/about')}"><i class="iconfont icon-aboutus"></i>关于</a></li>
+                    <li><a href="${site_url('/archives')}"><i class="iconfont icon-collect"></i>归档</a></li>
+                    <li><a href="${site_url('/links')}"><i class="iconfont icon-links"></i>友链</a></li>
+                </ul>
+            </nav>
+            <div class="navbar-search" onclick="">
+                <span class="icon-search"></span>
+                <form role="search" onsubmit="return false;">
+                <span class="search-box">
+                    <input type="text" id="search-inp" class="input" placeholder="搜索..." maxlength="30"
+                           autocomplete="off">
+                </span>
+                </form>
+            </div>
+            <nav id="sub-nav">
+                <div class="social">
+                    #if(not_empty(theme_option('social_weibo')))
+                    <a class="social weibo" target="_blank" href="http://weibo.com/${theme_option('social_weibo')}"><i class="iconfont icon-weibo"></i> 微博</a>
+                    #end
+
+                    #if(not_empty(theme_option('social_zhihu')))
+                    <a class="social zhihu" target="_blank"
+                       href="https://www.zhihu.com/people/${theme_option('social_zhihu')}"><i class="iconfont icon-zhihu"></i> 知乎</a>
+                    #end
+
+                    <a class="social rss" target="_blank" href="/feed"> <i class="iconfont icon-rss"></i> RSS</a>
+
+                    #if(not_empty(theme_option('social_github')))
+                    <a class="social github" target="_blank"
+                       href="https://github.com/${theme_option('social_github')}"><i class="iconfont icon-github"></i> Github</a>
+                    #end
+
+                    #if(not_empty(theme_option('social_twitter')))
+                    <a class="social twitter" target="_blank" href="https://blog.csdn.net/${theme_option('social_twitter')}"><i class="iconfont icon-linkedin"></i> CSDN</a>
+                    #end
+                    <form id="search" method="post" action="/" role="search">
+                        <input type="text" class="input" name="s" required="true" placeholder="...Search">
+                    </form>
+                    <div id="wechat">
+                        <img src="${theme_url('/static/images/avatar.png')}" />
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
