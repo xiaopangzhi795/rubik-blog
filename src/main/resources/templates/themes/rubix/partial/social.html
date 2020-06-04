@@ -1,21 +1,21 @@
 <div class="social-list">
     #if(not_empty(theme_option('social_weibo')))
-    <a class="social weibo" target="blank" href="http://weibo.com/${theme_option('social_weibo')}">微博</a>
+    <a class="social weibo" target="_blank" href="http://weibo.com/${theme_option('social_weibo')}"><i class="fa fa-weibo fa-fw"></i> 微博</a>
     #end
 
     #if(not_empty(theme_option('social_zhihu')))
-    <a class="social zhihu" target="blank"
-       href="https://www.zhihu.com/people/${theme_option('social_zhihu')}">知乎</a>
+    <a class="social zhihu" target="_blank"
+       href="https://www.zhihu.com/people/${theme_option('social_zhihu')}"><i class="fa fa-rss-square fa-fw"></i> 知乎</a>
     #end
 
-    <a class="social rss" target="blank" href="/feed">RSS</a>
+    <a class="social rss" target="_blank" href="/feed"> <i class="fa fa-rss-square fa-fw"></i> RSS</a>
 
     #if(not_empty(theme_option('social_github')))
-    <a class="social github" target="blank"
-       href="https://github.com/${theme_option('social_github')}">Github</a>
+    <a class="social github" target="_blank"
+       href="https://github.com/${theme_option('social_github')}"><i class="fa fa-github fa-fw"></i> Github</a>
     #end
 
     #if(not_empty(theme_option('social_twitter')))
-    <a class="social twitter" target="blank" href="https://twitter.com/${theme_option('social_twitter')}">Twitter</a>
+    <a class="social twitter" target="_blank" href="https://blog.csdn.net/${theme_option('social_twitter')}"><i class="fa fa-home fa-fw"></i> CSDN</a>
     #end
 </div>
