@@ -36,14 +36,16 @@
         <header id="header">
             <div class="profilepic"><a href="/" style="background-image: url(${theme_url('/static/images/apple-touch-icon.png')});"></a></div>
             <h1><a href="/">${site_title()}</a></h1>
-            <p class="subtitle">${site_description()}</p>
+            <p class="subtitle">${site_subtitle()}</p>
             <nav id="main-nav">
                 <ul>
-                    <li><a href="/"><i class="iconfont icon-home"></i>首页</a></li>
-                    <li><a href="${site_url('/tag')}"><i class="iconfont icon-collect"></i>分类</a></li>
-                    <li><a href="${site_url('/about')}"><i class="iconfont icon-aboutus"></i>关于</a></li>
-                    <li><a href="${site_url('/archives')}"><i class="iconfont icon-collect"></i>归档</a></li>
-                    <li><a href="${site_url('/links')}"><i class="iconfont icon-links"></i>友链</a></li>
+                    <!--<i class="iconfont icon-home"></i>-->
+                    <!--<i class="iconfont icon-collect"></i>-->
+                    <li><a href="${site_url('/tag')}">分类</a></li>
+                    <li><a href="${site_url('/about')}"><!--<i class="iconfont icon-aboutus"></i>-->About Me</a></li>
+                    <li><a href="${site_url('/archives')}"><!--<i class="iconfont icon-collect"></i>-->归档</a></li>
+                    <li><a href="${site_url('/links')}"><!--<i class="iconfont icon-links"></i>-->友链&闲聊区</a></li>
+                    <!--<li><a href="javascript:void(0)" style="color: red" class="content">限购！阿里云服务器0.9折</a></li>-->
                 </ul>
             </nav>
             <div class="navbar-search" onclick="">
@@ -66,7 +68,7 @@
                        href="https://www.zhihu.com/people/${theme_option('social_zhihu')}"><i class="iconfont icon-zhihu"></i> 知乎</a>
                     #end
 
-                    <a class="social rss" target="_blank" href="/feed"> <i class="iconfont icon-rss"></i> RSS</a>
+                    <!--<a class="social rss" target="_blank" href="/feed"> <i class="iconfont icon-rss"></i> RSS</a>-->
 
                     #if(not_empty(theme_option('social_github')))
                     <a class="social github" target="_blank"
@@ -85,4 +87,25 @@
                 </div>
             </nav>
         </header>
+    </div>
+    <div>
+
+        <div id="dialog_content" class="dialog_content" style="display:none">
+            <div class="dialogModal_header">【阿里云年中618】云产品0.9折起</div>
+            <div class="dialogModal_content">
+                <a target="_blank" href="https://www.aliyun.com/activity/618/index?source=5176.11533457&userCode=1ks8yumf&type=copy"><img src="${theme_url('/static/images/ads.jpg')}" alt="阿里云推广"></a>
+            </div>
+            <div class="dialogModal_footer">
+                <a target="_blank" href="https://www.aliyun.com/activity/618/index?source=5176.11533457&userCode=1ks8yumf&type=copy">去看看</a>
+            </div>
+        </div>
+        <script>
+            $('.content').click(function () {
+                $('.dialog_content').notifyModal({
+                    duration: 25000,
+                    placement: 'center',
+                    overlay: true
+                });
+            });
+        </script>
     </div>

@@ -46,6 +46,7 @@
             #end
         </a>
         <div class="navbar-menu">
+            <a href="javascript:void(0)" style="color: red" class="content">限购！阿里云服务器0.9折</a>
             <a href="${site_url('/archives')}">归档</a>
             <a href="${site_url('/tag')}">分类</a>
             <a href="${site_url('/links')}">友链&闲聊区</a>
@@ -63,6 +64,7 @@
         <div class="navbar-mobile-menu" onclick="">
             <span class="icon-menu cross"><span class="middle"></span></span>
             <ul>
+                <li><a href="javascript:void(0)" style="color: red" class="content">限购！阿里云服务器0.9折</a></li>
                 <li><a href="${site_url('/archives')}">归档</a></li>
                 <li><a href="${site_url('/tag')}">分类</a></li>
                 <li><a href="${site_url('/links')}">友链&闲聊区</a></li>
@@ -71,3 +73,24 @@
         </div>
     </div>
 </header>
+<div>
+
+    <div id="dialog_content" class="dialog_content" style="display:none">
+        <div class="dialogModal_header">【阿里云年中618】云产品0.9折起</div>
+        <div class="dialogModal_content">
+            <a target="_blank" href="https://www.aliyun.com/activity/618/index?source=5176.11533457&userCode=1ks8yumf&type=copy"><img src="${theme_url('/static/img/ads.jpg')}" alt="阿里云推广"></a>
+        </div>
+        <div class="dialogModal_footer">
+            <a target="_blank" href="https://www.aliyun.com/activity/618/index?source=5176.11533457&userCode=1ks8yumf&type=copy">去看看</a>
+        </div>
+    </div>
+    <script>
+        $('.content').click(function () {
+            $('.dialog_content').notifyModal({
+                duration: 25000,
+                placement: 'center',
+                overlay: true
+            });
+        });
+    </script>
+</div>
