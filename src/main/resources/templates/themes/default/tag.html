@@ -1,0 +1,27 @@
+#include('./partial/header.html', {title: '分类查询'})
+<div class="main-content archive-page clearfix">
+    <div class="categorys-item">
+        #for(tagMap : tagMaps)
+        <div class="categorys-title">${tagMap.type}</div>
+        <div class="post-lists">
+            <div class="post-lists-body">
+                #for(tag : tagMap.tags)
+                <div class="post-list-item">
+                    <div class="post-list-item-container">
+                        <div class="item-label" style="background-image: url('/static/admin/images/back/${random(3, '.png')}'); background-repeat: no-repeat;background-size: cover;">
+                            <div class="item-title">
+                                <a href="${site_url()}/${tag.type}/${tag.name}" style="font-weight: bold">${tag.name}</a>
+                            </div>
+                            <div class="item-meta clearfix">
+                                <div class="item-meta-date"  style="font-weight: bold">该分类下包含博文 <span style="color: red">${tag.count}</span> 篇</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                #end
+            </div>
+        </div>
+        #end
+    </div>
+</div>
+#include('./partial/footer.html')

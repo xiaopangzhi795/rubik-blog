@@ -7,6 +7,7 @@ import com.blade.mvc.http.Response;
 import com.blade.mvc.http.Session;
 import com.tale.bootstrap.TaleConst;
 import com.tale.model.dto.Archive;
+import com.tale.model.dto.TagMap;
 import com.tale.model.dto.Types;
 import com.tale.model.entity.Contents;
 import com.tale.model.params.PageParam;
@@ -112,6 +113,19 @@ public class IndexController extends BaseController {
         request.attribute("archives", archives);
         request.attribute("is_archive", true);
         return this.render("archives");
+    }
+
+    /**
+     * 分类
+     *
+     * @return
+     */
+    @GetRoute(value = {"tag", "tag.html"})
+    public String tag(Request request) {
+        List<TagMap> tagMaps = siteService.getTag();
+        request.attribute("tagMaps", tagMaps);
+        request.attribute("is_tag", true);
+        return this.render("tag");
     }
 
     /**

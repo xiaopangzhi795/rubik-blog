@@ -1,3 +1,4 @@
+#if(null != article)
 <div id="comments" class="cf">
     #if(article.allowComment)
     <span class="comment-num">
@@ -55,13 +56,13 @@
 
         <form id="comment-form" role="form" onsubmit="return TaleComment.subComment();">
             <div id="author_info">
-                <input type="text" name="author" maxlength="12" id="author" class="form-control" placeholder="称呼 *"
+                <input type="text" name="author" maxlength="12" id="author" class="form-control" placeholder="大哥怎么称呼？"
                     required value="">
-                <input type="email" name="mail" id="mail" class="form-control" placeholder="电子邮箱 *" required value="">
-                <input type="url" name="url" id="url" class="form-control" placeholder="网址(http://)" value="">
+                <input type="email" name="mail" id="mail" class="form-control" placeholder="电子邮箱 (xxx@xx.com)" value="">
+                <input type="url" name="url" id="url" class="form-control" placeholder="网址(http://xxxx)" value=">
             </div>
             <textarea name="content" id="textarea" class="form-control" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById('misubmit').click();return false};"
-                placeholder="在这里输入你的评论..." required=""></textarea>
+                placeholder="基佬，留下你的肥皂..." required=""></textarea>
             <button type="submit" class="submit" id="misubmit">提交评论</button>
             <input type="hidden" name="coid" id="coid" />
             <input type="hidden" name="cid" id="cid" value="${article.cid}" />
@@ -72,5 +73,6 @@
 
     #end
 </div>
-<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+#end
 #include('/comm/tale_comment.html')
+<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>

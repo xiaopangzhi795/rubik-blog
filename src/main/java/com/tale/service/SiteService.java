@@ -184,6 +184,59 @@ public class SiteService {
         return new ArrayList<>(0);
     }
 
+    /**
+     * 查询所有分类
+     */
+    public List<TagMap> getTag() {
+        String sql =
+                "SELECT " +
+                        "name as name, " +
+                        "type as type " +
+                        "FROM " +
+                        "t_metas where type = 'tag' " +
+                        "ORDER BY " +
+                        "mid DESC ";
+
+        List<TagMap> tagMap = new ArrayList<>();
+        List<Tag> tag = select().bySQL(Tag.class, sql).all();
+        if (null != tag) {
+            tagMap.add(new TagMap("标签", tag.stream().map(this::parseTag).collect(Collectors.toList())));
+        }else{
+            tagMap.add(new TagMap("标签", new ArrayList<>()));
+        }
+        sql =
+                "SELECT " +
+                        "name, " +
+                        "type " +
+                        "FROM " +
+                        "t_metas where type = 'category' " +
+                        "ORDER BY " +
+                        "mid DESC ";
+        List<Tag> category = select().bySQL(Tag.class, sql).all();
+        if (null != tag) {
+            tagMap.add(new TagMap("分类", category.stream().map(this::parseTag).collect(Collectors.toList())));
+        }else{
+            tagMap.add(new TagMap("分类", new ArrayList<>()));
+        }
+
+        return tagMap;
+    }
+
+    private Tag parseTag(Tag tag) {
+        Integer count = 0;
+        if (null != tag && "tag".equals(tag.getType())) {
+            count = select().bySQL(Integer.class, "select count(*) from t_contents where tags=?", tag.getName()).one();
+
+        } else if (null != tag && "category".equals(tag.getType())) {
+            count = select().bySQL(Integer.class, "select count(*) from t_contents where categories=?", tag.getName()).one();
+        }
+        if (count == null) {
+            count = 0;
+        }
+        tag.setCount(count);
+        return tag;
+    }
+
     private Archive parseArchive(Archive archive) {
         String dateStr = archive.getDateStr();
         Date   sd      = DateKit.toDate(dateStr + "01", "yyyy年MM月dd");
