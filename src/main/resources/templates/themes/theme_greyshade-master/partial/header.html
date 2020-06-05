@@ -41,32 +41,32 @@
                 <ul>
                     <!--<i class="iconfont icon-home"></i>-->
                     <!--<i class="iconfont icon-collect"></i>-->
-                    <li><a href="${site_url('/tag')}">分类</a></li>
-                    <li><a href="${site_url('/about')}"><!--<i class="iconfont icon-aboutus"></i>-->About Me</a></li>
-                    <li><a href="${site_url('/archives')}"><!--<i class="iconfont icon-collect"></i>-->归档</a></li>
-                    <li><a href="${site_url('/links')}"><!--<i class="iconfont icon-links"></i>-->友链&闲聊区</a></li>
+                    <li><a href="${site_url('/tag')}"><i class="iconfont icon-home"></i>分类</a></li>
+                    <li><a href="${site_url('/archives')}"><i class="iconfont icon-collect"></i>归档</a></li>
+                    <li><a href="${site_url('/links')}"><i class="iconfont icon-links"></i>友链</a></li>
+                    <li><a href="${site_url('/about')}"><i class="iconfont icon-aboutus"></i>关于</a></li>
                     <!--<li><a href="javascript:void(0)" style="color: red" class="content">限购！阿里云服务器0.9折</a></li>-->
                 </ul>
             </nav>
-            <div class="navbar-search" onclick="">
-                <span class="icon-search"></span>
-                <form role="search" onsubmit="return false;">
-                <span class="search-box">
-                    <input type="text" id="search-inp" class="input" placeholder="搜索..." maxlength="30"
-                           autocomplete="off">
-                </span>
-                </form>
-            </div>
+            <!--<div class="navbar-search" onclick="">-->
+                <!--<span class="icon-search"></span>-->
+                <!--<form role="search" onsubmit="return false;">-->
+                <!--<span class="search-box">-->
+                    <!--<input type="text" id="search-inp" class="input" placeholder="搜索..." maxlength="30"-->
+                           <!--autocomplete="off">-->
+                <!--</span>-->
+                <!--</form>-->
+            <!--</div>-->
             <nav id="sub-nav">
                 <div class="social">
                     #if(not_empty(theme_option('social_weibo')))
                     <a class="social weibo" target="_blank" href="http://weibo.com/${theme_option('social_weibo')}"><i class="iconfont icon-weibo"></i> 微博</a>
                     #end
 
-                    #if(not_empty(theme_option('social_zhihu')))
-                    <a class="social zhihu" target="_blank"
-                       href="https://www.zhihu.com/people/${theme_option('social_zhihu')}"><i class="iconfont icon-zhihu"></i> 知乎</a>
-                    #end
+                    <!--#if(not_empty(theme_option('social_zhihu')))-->
+                    <!--<a class="social zhihu" target="_blank"-->
+                       <!--href="https://www.zhihu.com/people/${theme_option('social_zhihu')}"><i class="iconfont icon-zhihu"></i> 知乎</a>-->
+                    <!--#end-->
 
                     <!--<a class="social rss" target="_blank" href="/feed"> <i class="iconfont icon-rss"></i> RSS</a>-->
 
