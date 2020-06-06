@@ -1,27 +1,20 @@
 #include('./partial/header.html', {title: '分类查询'})
-<div class="main-content archive-page clearfix">
-    <div class="categorys-item">
-        #for(tagMap : tagMaps)
-        <div class="categorys-title">${tagMap.type}</div>
-        <div class="post-lists">
-            <div class="post-lists-body">
-                #for(tag : tagMap.tags)
-                <div class="post-list-item">
-                    <div class="post-list-item-container">
-                        <div class="item-label" style="background-image: url('/static/admin/images/back/${random(3, '.png')}'); background-repeat: no-repeat;background-size: cover;">
-                            <div class="item-title">
-                                <a href="${site_url()}/${tag.type}/${tag.name}" style="font-weight: bold">${tag.name}</a>
-                            </div>
-                            <div class="item-meta clearfix">
-                                <div class="item-meta-date"  style="font-weight: bold">该分类下包含博文 <span style="color: red">${tag.count}</span> 篇</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="mid-col">
+    <div class="mid-col-container">
+        <article class="post post-archives">
+            <h1 class="title">分类查询</h1>
+            <div class="entry-content">
+                #for(tagMap : tagMaps)
+                <h3>${tagMap.type}</h3>
+                <ul>
+                    #for(tag : tagMap.tags)
+                    <li>
+                        <a href="${site_url()}/${tag.type}/${tag.name}" style="font-weight: bold">${tag.name}</a>&nbsp;&nbsp;&nbsp;&nbsp;该分类下包含博文 <span style="color: red">${tag.count}</span> 篇</li>
+                    #end
+                </ul>
                 #end
             </div>
-        </div>
-        #end
+        </article>
     </div>
-</div>
+
 #include('./partial/footer.html')
