@@ -8,7 +8,7 @@
                                 </form>
 							</div>
 						   	<a id="weixin-img" class="cd-weixin"><span class="fa fa-weixin"></span>
-							<div id="weixin-pic"><img src="${theme_url('/static/images/weixin.png')}">
+							<div id="weixin-pic"><img src="${theme_option('weixinqrcode')}">
 							</div>
 							</a>
 							<div class="gotop-box active"><div class="gotop-btn"><span class="fa fa-chevron-up"></span></div></div>
@@ -62,7 +62,7 @@
 		/* ]]> */
 		</script>
 #if(allow_cloud_CDN() == "true")
-<script type='text/javascript' src="${theme_url('/static/js/jquery.min.js?ver=2.1.4')}"></script>
+<script src="//cdn.bootcss.com/instantclick/3.0.1/instantclick.min.js"></script>
 #else
 <script src="${theme_url('/static/js/instantclick.min.js')}"></script>
 #end

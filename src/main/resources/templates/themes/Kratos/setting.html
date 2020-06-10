@@ -26,6 +26,13 @@
                                value="${options.author ?! ''}" placeholder="您的博客昵称">
 						</div>
 					</div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">微信二维码</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="weixinqrcode"
+                               value="${options.weixinqrcode ?! ''}" placeholder="微信二维码">
+                    </div>
+                </div>
 				<div class="form-group">
                     <label class="col-md-3 control-label">背景图片</label>
                     <div class="col-md-9">
@@ -44,21 +51,21 @@
                     <label class="col-md-3 control-label">背景图片大标题</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" name="big_title"
-                               value="${options.bigtitle ?! ''}" placeholder="请输入背景图片大标题">
+                               value="${options.big_title ?! ''}" placeholder="请输入背景图片大标题">
                     </div>
                 </div>
 				<div class="form-group">
                     <label class="col-md-3 control-label">背景图片小标题</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" name="small_title"
-                               value="${options.smalltitle ?! ''}" placeholder="请输入背景图片小标题">
+                               value="${options.small_title ?! ''}" placeholder="请输入背景图片小标题">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">个人介绍</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" name="textleft"
-                               value="${options.text.left ?! ''}" placeholder="侧边栏个人介绍">
+                               value="${options.textleft ?! ''}" placeholder="侧边栏个人介绍">
                     </div>
                 </div>
 				<div class="clearfix pull-right">
