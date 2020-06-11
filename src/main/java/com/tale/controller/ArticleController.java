@@ -42,6 +42,11 @@ public class ArticleController extends BaseController {
     @Inject
     private SiteService siteService;
 
+    @GetRoute(value = {"/403"})
+    public String err403(Request request) {
+        return this.render_403();
+    }
+
     /**
      * 自定义页面
      */

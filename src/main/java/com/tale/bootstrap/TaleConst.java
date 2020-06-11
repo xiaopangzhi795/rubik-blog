@@ -86,6 +86,11 @@ public class TaleConst {
     public static final String LOGIN_URI = "/admin/login";
 
     /**
+     * 403地址
+     */
+    public static final String ERROR_403 = "/403";
+
+    /**
      * 插件菜单 Attribute Name
      */
     public static final String PLUGINS_MENU_NAME = "plugin_menus";

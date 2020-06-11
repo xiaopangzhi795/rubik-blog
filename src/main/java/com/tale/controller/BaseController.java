@@ -37,7 +37,11 @@ public abstract class BaseController {
     }
 
     public String render_404() {
-        return "/comm/error_404";
+        return "/comm/error2_404.html";
+    }
+
+    public String render_403() {
+        return "/comm/error_403";
     }
 
 }

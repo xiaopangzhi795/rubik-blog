@@ -25,11 +25,14 @@
            <div class="mon_arc" style="display:none">
 		   #for(article : archive.articles)
             <div class="arc-t" style="background-image: url('/static/admin/images/back/${random(3, '.png')}'); background-repeat: no-repeat;background-size: cover;">
-             <div class="arc-tile">
-              <a href="${(permalink())}">${title()}</a>
-              <br />
-              <span>${created('yyyy-MM-dd')}</span>
-             </div>
+              <div class="arc-tile">
+               <a href="${(permalink())}">
+               ${title()}
+               </a>
+               <br />
+               <span>${created('yyyy-MM-dd')}</span>
+              </div>
+
             </div>
 			#end
            </div>
