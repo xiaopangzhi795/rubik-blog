@@ -113,6 +113,10 @@
                 success: function (result) {
                     if(result && result.success){
                         tale.alertOk('密码修改成功');
+                        $("#pwd-form > input").val('');
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 700);
                     } else {
                         tale.alertError(result.msg || '密码修改失败');
                     }

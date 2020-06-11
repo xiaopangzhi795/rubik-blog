@@ -99,10 +99,11 @@ public class TaleUtils {
      * @param session
      * @param response
      */
-    public static void logout(Session session, Response response) {
+    public static void logout(Session session, Response response, boolean isRedirect) {
         session.removeAttribute(TaleConst.LOGIN_SESSION_KEY);
         response.removeCookie(TaleConst.USER_IN_COOKIE);
-        response.redirect(Commons.site_url());
+        if(isRedirect)
+            response.redirect(Commons.site_url());
     }
 
     /**
