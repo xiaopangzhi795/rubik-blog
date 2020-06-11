@@ -22,17 +22,14 @@
 								<div class="panel-reward" style="display: none;">
 									<ul class="dsye">
 										#if(theme_option('alipay') == "")
-										<li class="alipay"><img alt="打赏" src="${theme_url('/static/images/alipay.jpg')}"><b>支付宝扫一扫</b></li>
 										#else
 										<li class="alipay"><img alt="打赏" src="${theme_option('alipay')}"><b>支付宝扫一扫</b></li>
 										#end
 										#if(theme_option('weixinpay') == "")
-										<li class="weixinpay"><img alt="打赏" src="${theme_url('/static/images/weixinpay.jpg')}"><b>微信扫一扫</b></li>
 										#else
 										<li class="weixinpay"><img alt="打赏" src="${theme_option('weixinpay')}"><b>微信扫一扫</b></li>
 										#end
 										#if(theme_option('qqpay') == "")
-										<li class="txpay"><img alt="打赏" src="${theme_url('/static/images/qqpay.jpg')}"><b>企鹅扫一扫</b></li>
 										#else
 										<li class="txpay"><img alt="打赏" src="${theme_option('qqpay')}"><b>企鹅扫一扫</b></li>
 										#end
@@ -110,7 +107,9 @@
 					<div class="post-copyright panel panel-sort sbclass aos-init aos-animate" data-aos="fade-up">
 						<p class="sidetags"><i class="fa fa-tags"></i> 本文标签：
 							${show_tags()}			
-						<p><i class="fa fa-bullhorn"></i> 版权声明：本博客所有文章除特别声明外，本文皆为《<a href="${site_url()}" title="管理员">${theme_option('author') ?! ''}</a>》原创，转载请保留文章出处。</p>
+						<p><i class="fa fa-bullhorn"></i> 版权声明：本站使用「
+						<a href="https://creativecommons.org/licenses/by/4.0" target="_blank" style="margin: 0px; padding: 0px; color: rgb(45, 140, 240); transition: all 0.3s ease 0s !important;">署名 4.0 国际</a>
+						」创作共享协议。本站所有文章除特别声明外，皆为《<a href="${site_url()}" title="作者">${theme_option('author') ?! ''}</a>》原创或翻译，转载请在文章明显位置注明作者及出处。</p>
 						<p><i class="fa fa-share-alt-square"></i> 本文链接：${title()} - ${permalink()}</p>
 					</div>
 				</article>
