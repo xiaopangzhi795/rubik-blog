@@ -32,10 +32,12 @@
 										#if(not_empty(theme_option('fa_github')))
 										<a target="_blank" rel="nofollow" href="https://github.com/${theme_option('fa_github')}"><i class="fa fa-github"></i></a>
 										#end
-										</p>
-									<p> &copy; 2020 <a href="${site_url()}/">${site_title()}</a>. All Rights Reserved.<br>
+										<a target="_blank" rel="nofollow" href="mailto:${login_user.email ?! 'kaifengqzl@outlook.com'}"><i class="fa fa-envelope-o"></i></a>
+									</p>
+									<p> &copy; 2020 <a href="${site_url()}/">${site_title()}</a>. All Rights Reserved. <br/>
+									<a target="_blank" rel="nofollow" id="resume"><i class="fa fa-star">GET&nbsp;resume</i></a> <br/> <br/>
 										<img src="${theme_url('/static/images/icon-police.png')}">&nbsp;&nbsp;
-										<a href="www.beian.miit.gov.cn" target="_blank">${site_option('site_filing')}</a>
+										<a href="http://www.beian.miit.gov.cn" target="_blank">${site_option('site_filing')}</a> | 内容如有侵权，请联系站长删除
 										</a></p>
 									<p></p>
 								</div>
@@ -56,10 +58,24 @@
 		<script type='text/javascript' src="${theme_url('/static/js/hoverIntent.min.js?ver=r7')}"></script>
 		<script type='text/javascript' src="${theme_url('/static/js/superfish.js?ver=1.0.0')}"></script>
 		<script type='text/javascript' src="${theme_url('/static/js/kratos.js?ver=2.6')}"></script>
+		<script type='text/javascript' src="/static/admin/js/base.js"></script>
 		<script type='text/javascript'>
 		/* <![CDATA[ */
 			var xb = {"thome":"${theme_url()}","owo":"${theme_url()}/static"};
 		/* ]]> */
+
+			$(function () {
+				$("#resume").click(function () {
+					var resume = "${site_option('resume')}";
+					if (resume == undefined || resume == null || resume == ''||resume.toLocaleUpperCase()=='NULL') {
+						alert("简历正在努力制作中！请耐心等待！");
+					}else{
+						$("#resume").attr('href', resume);
+						$("#resume").click();
+					}
+				});
+			})
+
 		</script>
 #if(allow_cloud_CDN() == "true")
 <script src="//cdn.bootcss.com/instantclick/3.0.1/instantclick.min.js"></script>
