@@ -78,6 +78,7 @@ public class BaseWebHook implements WebHook {
         Users  user = TaleUtils.getLoginUser();
         String uri  = request.uri();
         String host = request.header("Host");
+        log.info("请求host：【{}】", host);
         if (null == user) {
             Integer uid = TaleUtils.getCookieUid(request);
             if (null != uid) {

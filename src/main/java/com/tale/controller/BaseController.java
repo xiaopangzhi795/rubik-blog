@@ -1,5 +1,6 @@
 package com.tale.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.blade.mvc.http.Request;
 import com.tale.model.entity.Users;
 import com.tale.utils.MapCache;
@@ -26,6 +27,11 @@ public abstract class BaseController {
     public BaseController keywords(Request request, String keywords) {
         request.attribute("keywords", keywords);
         return this;
+    }
+
+    protected static JSONObject beanToJSONObject(Object obj) {
+        return JSONObject.parseObject(JSONObject.toJSONString(obj));
+
     }
 
     public Users user() {

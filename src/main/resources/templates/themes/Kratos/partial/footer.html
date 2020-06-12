@@ -33,6 +33,7 @@
 										<a target="_blank" rel="nofollow" href="https://github.com/${theme_option('fa_github')}"><i class="fa fa-github"></i></a>
 										#end
 										<a target="_blank" rel="nofollow" href="mailto:${login_user.email ?! 'kaifengqzl@outlook.com'}"><i class="fa fa-envelope-o"></i></a>
+										<a rel="nofollow" id="checkInfo" href="javascript:void(0)"><i class="fa fa-signal"></i></a>
 									</p>
 									<p> &copy; 2020 <a href="${site_url()}/">${site_title()}</a>. All Rights Reserved. <br/>
 									<a target="_blank" rel="nofollow" id="resume"><i class="fa fa-star">GET&nbsp;resume</i></a> <br/> <br/>
@@ -65,6 +66,13 @@
 		/* ]]> */
 
 			$(function () {
+				$("#checkInfo").click(function () {
+					alert("请打开开发者工具选项，查看客户端信息");
+					$.get("/userInfo",function (data) {
+						console.log(data)
+					});
+					return
+				})
 				$("#resume").click(function () {
 					var resume = "${site_option('resume')}";
 					if (resume == undefined || resume == null || resume == ''||resume.toLocaleUpperCase()=='NULL') {
