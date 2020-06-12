@@ -74,6 +74,18 @@ public class ArticleController extends BaseController {
                 JSONObject data = result.getJSONObject("data");
                 userInfo.append("\r\n IP:").append(data.getString("ip")).append("   ").append("地区:")
                         .append(data.getString("province")).append("  ").append(data.getString("city"));
+                if (!data.getString("city").contains("内网")) {
+                    url = "https://devtool.top/api/weather?city=" + data.getString("city");
+                    response = HttpClientUtil.doGet(url);
+                    result = JSONObject.parseObject(response.get("result").toString().trim());
+                    if (result.getInteger("code") == 200) {
+                        data = result.getJSONObject("data");
+                        userInfo.append("\r\n").append("湿度：").append(data.getString("humi"))
+                                .append("  天气：").append(data.getString("info"))
+                                .append("  温度：").append(data.getString("quality")).append("~").append(data.getString("temp"))
+                                .append("  ").append(data.getString("wind"));
+                    }
+                }
             }else{
                 userInfo.append("IP:").append(ip).append("  地区:").append("未知");
             }
