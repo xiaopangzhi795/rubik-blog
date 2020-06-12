@@ -17,8 +17,10 @@
         <commonmark.version>0.11.0</commonmark.version>
         <rome.version>1.0</rome.version>
         <emoji.version>4.0.0</emoji.version>
+        <!--跳过单元测试 -->
+        <maven.test.skip>true</maven.test.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>

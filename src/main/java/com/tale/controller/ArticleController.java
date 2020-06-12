@@ -66,7 +66,7 @@ public class ArticleController extends BaseController {
         userInfo.append("操作系统：" + os.toString() + " \r\n 浏览器：" + browser.toString()).append(" \r\n HOST:" + request.header("Host"));
         String ip = "";
         try {
-            ip = InetAddress.getLocalHost().getHostAddress(); //ip 地址
+            ip = getIpAddr(request); //ip 地址
             String url = "https://www.devtool.top/api/ip/" + ip;
             Map<String, Object> response = HttpClientUtil.doGet(url);
             JSONObject result = JSONObject.parseObject(response.get("result").toString().trim());
@@ -75,7 +75,7 @@ public class ArticleController extends BaseController {
                 userInfo.append("\r\n IP:").append(data.getString("ip")).append("   ").append("地区:")
                         .append(data.getString("province")).append("  ").append(data.getString("city"));
                 if (!data.getString("city").contains("内网")) {
-                    url = "https://devtool.top/api/weather?city=" + data.getString("city");
+                    url = "https://www.devtool.top/api/weather?city=" + data.getString("city").replaceAll("省", "").replaceAll("市", "");
                     response = HttpClientUtil.doGet(url);
                     result = JSONObject.parseObject(response.get("result").toString().trim());
                     if (result.getInteger("code") == 200) {
@@ -98,6 +98,8 @@ public class ArticleController extends BaseController {
         }
         return RestResponse.ok(userInfo.toString());
     }
+
+
 
     /**
      * 自定义页面
