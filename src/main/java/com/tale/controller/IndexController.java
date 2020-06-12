@@ -182,7 +182,7 @@ public class IndexController extends BaseController {
      */
     @Route(value = "logout")
     public void logout(Session session, Response response) {
-        TaleUtils.logout(session, response);
+        TaleUtils.logout(session, response, true);
     }
 
 }

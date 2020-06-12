@@ -49,6 +49,27 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">站点备案信息</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" v-model="options.site_filing" placeholder="站点备案信息" required aria-required="true"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">简历地址</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" v-model="options.resume" placeholder="简历地址" required aria-required="true"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">管理台登录限制域名</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" v-model="options.hostConfig" placeholder="管理台登录限制域名" required aria-required="true"/>
+                                        </div>
+                                    </div>
+
                                     <div class="clearfix pull-right">
                                         <button type="button" class="btn btn-inverse waves-effect waves-light" @click="saveSetting">
                                             保存设置

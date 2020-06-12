@@ -1,0 +1,37 @@
+#include('./header.html',{title: article.title, keywords: article.tags})
+		<header class="intro-header" style="background-image: url(${theme_url('/static/images/snowgitlabk.jpg')})">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+						<div class="post-heading">
+							<h1>${title()}</h1>
+							<span class="meta">@${theme_option('blog_author')} &nbsp;${created('MMMM dd, yyyy')}</span>
+							<div class="tags post-tags">
+								${show_categories()}&nbsp;</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- content start -->
+		<div class="container">
+			<div class="am-g am-g-fixed blog-fixed">
+				<div class="am-u-lg-12 am-u-sm-12">
+					<article class="am-article blog-article-p article-trigger">
+						<div id="post-content" class="am-article-bd">
+							${show_content()}
+						</div>
+					</article>					
+					<hr>
+				</div>
+			</div>
+		</div>
+		#include('./comments.html')
+		#if(is_post)
+		<div id="directory-content" class="directory-content">
+			<div id="directory">
+			</div>
+		</div>
+		#end
+		<!-- content end -->
+#include('./footer.html')

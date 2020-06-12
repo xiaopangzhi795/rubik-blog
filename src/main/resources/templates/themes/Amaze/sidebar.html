@@ -1,0 +1,71 @@
+<div class="am-u-lg-4 am-u-sm-10 am-u-lg-offset-0 am-u-sm-offset-0 sidebar-container">
+    <section>
+        <div class="sidebar-header">
+            <span class="sidebar-header-title">
+                关于博主
+            </span>
+        </div>
+        <ul class="list-inline">
+        #if(not_empty(theme_option('am_qq')))
+            <li>
+                <a class="am-icon-btn am-icon-qq" target="_blank" itemtype="url" href="tencent://message/?uin=${theme_option('am_qq')}&Site=junichi&Menu=yes"></a>
+            </li>
+            #end
+            #if(not_empty(theme_option('am_github')))
+            <li>
+                <a class="am-icon-btn am-icon-github" target="_blank" itemtype="url" href="https://github.com/${theme_option('am_github')}"></a>
+            </li>
+            #end
+            #if(not_empty(theme_option('am_weibo')))
+            <li>
+                <a class="am-icon-btn am-icon-weibo" target="_blank" itemtype="url" href="http://weibo.com/${theme_option('am_weibo')}"></a>
+            </li>
+            #end
+            #if(not_empty(theme_option('am_twitter')))
+            <li>
+                <a class="am-icon-btn am-icon-twitter" target="_blank" itemtype="url" href="http://twitter.com/${theme_option('am_twitter')}"></a>
+            </li>
+            #end
+            </ul>
+    </section>
+    <section>
+        <div class="sidebar-header">
+            <span class="sidebar-header-title">
+                分类列表
+            </span>
+        </div>
+        <div class="sidebar-list">
+        <ul class="sidebar-list-body sidebar-list-items">
+		#for(a : categories())
+        <li class="sidebar-list-item">
+		<a href="${site_url()}/category/${a.name}">${a.name} (${a.count})</a>
+		</li>
+		#end
+        </ul>
+        </div>
+    </section>
+    <section>
+        <div class="sidebar-header">
+            <span class="sidebar-header-title">
+                标签列表
+            </span>
+        </div>
+        <div class="tags">
+		#for(t : tags())
+            <a href="${site_url()}/tag/${t.name}/">${t.name}</a>#end	
+        </div>
+    </section>
+    <section>
+        <div class="sidebar-header">
+            <span class="sidebar-header-title">
+                最新文章
+            </span>
+        </div>
+        <div class="sidebar-list">
+        <ul class="sidebar-list-body sidebar-list-items">
+		#for(article : recent_articles(5))
+        <li class="sidebar-list-item"><a href="${permalink()}">${title()}</a></li>
+		#end
+        </ul>
+        </div>
+		</section>

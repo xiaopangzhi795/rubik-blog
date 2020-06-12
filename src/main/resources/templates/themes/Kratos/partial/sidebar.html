@@ -1,0 +1,170 @@
+<aside id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm scrollspy">
+<div id="sidebar">	
+	<aside id="kratos_about-3" class="widget amadeus_about clearfix">
+		<div class="photo-background">
+			<div class="photo-background" style="background:url(${theme_url('/static/images/about.jpg')}) no-repeat center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
+		</div>
+		<div class="photo-wrapper clearfix">
+			<div class="photo-wrapper-tip text-center">
+				<a href="${site_url()}">
+					#if(theme_option('logo_url') == "")
+					<img src="${theme_url('/static/images/avatar.jpg')}" class="about-photo">
+					#else
+					<img src="${theme_option('logo_url')}" class="about-photo">
+					#end
+				</a>
+			</div>
+		</div>
+		<div class="textwidget">
+			#if(theme_option('textleft') == "")
+			<p class="text-left">没有天生的高手，更没有永远的菜鸟</p>
+			#else
+			<p class="text-left">${theme_option('textleft')}</p>
+			#end
+		</div>
+	</aside>
+	<aside class="widget widget_kratos_poststab">
+		<ul id="tabul" class="nav nav-tabs nav-justified visible-lg">
+			<li class="active"><a href="#newest" data-toggle="tab"> 最新文章</a></li>
+			<li><a href="#hot" data-toggle="tab">最新回复</a></li>
+			<li id="directoryLi" style="display: none"><a id="directoryA" href="#directory-content" data-toggle="tab">本页目录</a></li>
+		</ul>
+		<!--<ul id="tabul" class="nav nav-tabs nav-justified visible-md">-->
+			<!--<li class="active"><a href="#newest" data-toggle="tab"> 最新</a></li>-->
+			<!--<li><a href="#hot" data-toggle="tab">最新</a></li>-->
+		<!--</ul>-->
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="newest">
+				<ul class="list-group">
+				#for(article : recent_articles(5))
+				<a class="list-group-item visible-md visible-lg" title="${title()}" href="${permalink()}"><i class="fa fa-book"></i>${title()}</a>#end
+			    </ul>
+			</div>
+			<div class="tab-pane fade" id="hot">
+			<ul class="list-group">
+			#for(comm : recent_comments(5))
+			<a class="list-group-item visible-md visible-lg" href="${site_url('/article/')}${comm.cid}#comment-${comm.coid}">
+			<i class="fa fa-book"></i>
+			${comm.author}：${comm.content}
+			</a>
+			#end
+			</ul>
+			</div>
+			<div id="directory-content" class="tab-pane fade">
+				<div id="directory">
+				</div>
+			</div>
+		</div>
+	</aside>
+	<aside id="categories" class="widget widget_categories clearfix"><h4 class="widget-title">分类目录</h4><ul>
+	#for(c : categories())
+	<li class="cat-item cat-item"><a href="/category/${c.name}/" >${c.name}</a></li>#end
+	</li>
+</ul>
+</aside>
+	<aside id="kratos_tags-2" class="widget widget_kratos_tags clearfix"><h4 class="widget-title">标签聚合</h4>
+		<div class="tag_clouds">
+			#for(t : tags())
+			<a class="" href="/tag/${t.name}/" title="${t.name}">${t.name}</a>#end
+		</div>
+	</aside>
+</div>
+</aside>
+#if(is_post)
+<script>
+	$("#directoryLi").show()
+	$(document).ready(function () {
+		$('#directory').html('');
+		var postDirectoryBuild = function() {
+			var postChildren = function children(childNodes, reg) {
+						var result = [],
+								isReg = typeof reg === 'object',
+								isStr = typeof reg === 'string',
+								node, i, len;
+						for (i = 0, len = childNodes.length; i < len; i++) {
+							node = childNodes[i];
+							if ((node.nodeType === 1 || node.nodeType === 9) &&
+									(!reg ||
+											isReg && reg.test(node.tagName.toLowerCase()) ||
+											isStr && node.tagName.toLowerCase() === reg)) {
+								result.push(node);
+							}
+						}
+						return result;
+					},
+					createPostDirectory = function(article, directory, isDirNum) {
+						var contentArr = [],
+								titleId = [],
+								levelArr, root, level,
+								currentList, list, li, link, i, len;
+						levelArr = (function(article, contentArr, titleId) {
+							var titleElem = postChildren(article[0].childNodes, /^h\d$/),
+									levelArr = [],
+									lastNum = 1,
+									lastRevNum = 1,
+									count = 0,
+									guid = 1,
+									id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+									lastRevNum, num, elem;
+							while (titleElem.length) {
+								elem = titleElem.shift();
+								contentArr.push(elem.innerHTML);
+								num = +elem.tagName.match(/\d/)[0];
+								if (num > lastNum) {
+									levelArr.push(1);
+									lastRevNum += 1;
+								} else if (num === lastRevNum ||
+										num > lastRevNum && num <= lastNum) {
+									levelArr.push(0);
+									lastRevNum = lastRevNum;
+								} else if (num < lastRevNum) {
+									levelArr.push(num - lastRevNum);
+									lastRevNum = num;
+								}
+								count += levelArr[levelArr.length - 1];
+								lastNum = num;
+								elem.id = elem.id || (id + guid++);
+								titleId.push(elem.id);
+							}
+							if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+							return levelArr;
+						})(article, contentArr, titleId);
+						currentList = root = document.createElement('ul');
+						dirNum = [0];
+						for (i = 0, len = levelArr.length; i < len; i++) {
+							level = levelArr[i];
+							if (level === 1) {
+								list = document.createElement('ul');
+								if (!currentList.lastElementChild) {
+									currentList.appendChild(document.createElement('li'));
+								}
+								currentList.lastElementChild.appendChild(list);
+								currentList = list;
+								dirNum.push(0);
+							} else if (level < 0) {
+								level *= 2;
+								while (level++) {
+									if (level % 2) dirNum.pop();
+									currentList = currentList.parentNode;
+								}
+							}
+							dirNum[dirNum.length - 1]++;
+							li = document.createElement('li');
+							link = document.createElement('a');
+							link.href = '#' + titleId[i];
+							link.innerHTML = '📌' +
+									' ' + contentArr[i];
+							li.appendChild(link);
+							currentList.appendChild(li);
+						}
+						directory.appendChild(root);
+					};
+			createPostDirectory(document.getElementsByClassName('kratos-post-content'),document.getElementById('directory'), true);
+		};
+		postDirectoryBuild();
+		$("#directoryA").click()
+	})
+
+</script>
+#end

@@ -1,5 +1,6 @@
 package com.tale.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.blade.exception.ValidatorException;
 import com.blade.ioc.annotation.Inject;
 import com.blade.kit.StringKit;
@@ -16,10 +17,18 @@ import com.tale.model.entity.Contents;
 import com.tale.service.CommentsService;
 import com.tale.service.ContentsService;
 import com.tale.service.SiteService;
+import com.tale.utils.HttpClientUtil;
 import com.tale.validators.CommonValidator;
+import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.OperatingSystem;
+import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
+import java.util.Map;
 
 import static com.tale.bootstrap.TaleConst.COMMENT_APPROVED;
 import static com.tale.bootstrap.TaleConst.COMMENT_NO_AUDIT;
@@ -41,6 +50,56 @@ public class ArticleController extends BaseController {
 
     @Inject
     private SiteService siteService;
+
+    @GetRoute(value = {"/403"})
+    public String err403(Request request) {
+        return this.render_403();
+    }
+
+    @GetRoute(value = {"/userInfo"})
+    @JSON
+    public RestResponse<String> getInfo(Request request){
+        UserAgent userAgent = UserAgent.parseUserAgentString(request.header("User-Agent")); //req就是request请求
+        Browser browser = userAgent.getBrowser();   //获取浏览器信息 
+        OperatingSystem os = userAgent.getOperatingSystem(); //获取操作系统信息
+        StringBuffer userInfo = new StringBuffer();
+        userInfo.append("操作系统：" + os.toString() + " \r\n 浏览器：" + browser.toString()).append(" \r\n HOST:" + request.header("Host"));
+        String ip = "";
+        try {
+            ip = getIpAddr(request); //ip 地址
+            String url = "https://www.devtool.top/api/ip/" + ip;
+            Map<String, Object> response = HttpClientUtil.doGet(url);
+            JSONObject result = JSONObject.parseObject(response.get("result").toString().trim());
+            if (result.getInteger("code") == 200) {
+                JSONObject data = result.getJSONObject("data");
+                userInfo.append("\r\n IP:").append(data.getString("ip")).append("   ").append("地区:")
+                        .append(data.getString("province")).append("  ").append(data.getString("city"));
+                if (!data.getString("city").contains("内网")) {
+                    url = "https://www.devtool.top/api/weather?city=" + data.getString("city").replaceAll("省", "").replaceAll("市", "");
+                    response = HttpClientUtil.doGet(url);
+                    result = JSONObject.parseObject(response.get("result").toString().trim());
+                    if (result.getInteger("code") == 200) {
+                        data = result.getJSONObject("data");
+                        userInfo.append("\r\n").append("湿度：").append(data.getString("humi"))
+                                .append("  天气：").append(data.getString("info"))
+                                .append("  温度：").append(data.getString("quality")).append("~").append(data.getString("temp"))
+                                .append("  ").append(data.getString("wind"));
+                    }
+                }
+            }else{
+                userInfo.append("IP:").append(ip).append("  地区:").append("未知");
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            userInfo.append("IP： 未知");
+        } catch (IOException e) {
+            e.printStackTrace();
+            userInfo.append("ip地址：" + ip);
+        }
+        return RestResponse.ok(userInfo.toString());
+    }
+
+
 
     /**
      * 自定义页面

@@ -1,6 +1,7 @@
 package com.tale.hooks;
 
 import com.blade.ioc.annotation.Bean;
+import com.blade.ioc.annotation.Inject;
 import com.blade.kit.DateKit;
 import com.blade.mvc.RouteContext;
 import com.blade.mvc.hook.WebHook;
@@ -10,7 +11,9 @@ import com.tale.annotation.SysLog;
 import com.tale.bootstrap.TaleConst;
 import com.tale.model.entity.Logs;
 import com.tale.model.entity.Users;
+import com.tale.service.OptionsService;
 import com.tale.utils.TaleUtils;
+import jetbrick.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import static io.github.biezhi.anima.Anima.select;
@@ -18,6 +21,8 @@ import static io.github.biezhi.anima.Anima.select;
 @Bean
 @Slf4j
 public class BaseWebHook implements WebHook {
+    @Inject
+    private OptionsService optionsService;
 
     @Override
     public boolean before(RouteContext context) {
@@ -72,6 +77,8 @@ public class BaseWebHook implements WebHook {
     private boolean isRedirect(Request request, Response response) {
         Users  user = TaleUtils.getLoginUser();
         String uri  = request.uri();
+        String host = request.header("Host");
+        log.info("请求host：【{}】", host);
         if (null == user) {
             Integer uid = TaleUtils.getCookieUid(request);
             if (null != uid) {
@@ -80,6 +87,13 @@ public class BaseWebHook implements WebHook {
             }
         }
         if (uri.startsWith(TaleConst.ADMIN_URI) && !uri.startsWith(TaleConst.LOGIN_URI)) {
+            String hostConfig = optionsService.getOption("hostConfig");
+            if (StringUtils.isNotBlank(hostConfig)) {
+                if (!host.startsWith(hostConfig)) {
+                    response.redirect(TaleConst.ERROR_403);
+                    return false;
+                }
+            }
             if (null == user) {
                 response.redirect(TaleConst.LOGIN_URI);
                 return false;

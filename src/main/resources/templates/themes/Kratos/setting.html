@@ -1,0 +1,215 @@
+#tag layout_block("bodyContent")
+
+<div class="col-sm-12">
+    <h4 class="page-title">主题设置</h4>
+</div>
+
+<form id="option-from" class="form-horizontal" role="form">
+    <div class="col-md-6">
+        <div class="panel panel-color panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">基本设置</h3>
+            </div>
+            <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">侧边栏个人头像</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="logo_url"
+                                       value="${options.logo_url ?! theme_url('/static/images/avatar.jpg')}"
+                                       placeholder="请输入头像外链"/>
+                            </div>
+                    </div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">文章作者</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control" name="author"
+                               value="${options.author ?! ''}" placeholder="您的博客昵称">
+						</div>
+					</div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">微信二维码</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="weixinqrcode"
+                               value="${options.weixinqrcode ?! ''}" placeholder="微信二维码">
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-md-3 control-label">背景图片</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="background_image_url"
+                               value="${options.background_image_url ?! theme_url('/static/images/background.jpg')}" placeholder="网站背景图片">
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-md-3 control-label">网站背景颜色</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="site_colour"
+                               value="${options.site_colour ?! ''}" placeholder="请输入颜色代码,如#ffffff">
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-md-3 control-label">背景图片大标题</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="big_title"
+                               value="${options.big_title ?! ''}" placeholder="请输入背景图片大标题">
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-md-3 control-label">背景图片小标题</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="small_title"
+                               value="${options.small_title ?! ''}" placeholder="请输入背景图片小标题">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">个人介绍</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="textleft"
+                               value="${options.textleft ?! ''}" placeholder="侧边栏个人介绍">
+                    </div>
+                </div>
+				<div class="clearfix pull-right">
+                    <button type="button" class="btn btn-primary waves-effect waves-light"
+                            onclick="saveThemeOptions('option-from')">
+                        保存设置
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-color panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">广告设置</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">广告链接</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="adsurl"
+                               value="${options.adsurl ?! 'https://www.aliyun.com/activity/618/index?source=5176.11533457&userCode=1ks8yumf&type=copy'}" placeholder="广告链接">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">广告图片地址</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="adsimageurl"
+                               value="${options.adsimageurl ?! theme_url('/static/images/ads.jpg')}" placeholder="广告图片地址">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">广告标题文字</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="adstitlecontent"
+                               value="${options.adstitlecontent ?! '限购！阿里云服务器0.9折'}" placeholder="广告标题文字">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">广告页标题</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="adstitle"
+                               value="${options.adstitle ?! '【阿里云年中618】云产品0.9折起'}" placeholder="广告页标题">
+                    </div>
+                </div>
+                <div class="clearfix pull-right">
+                    <button type="button" class="btn btn-primary waves-effect waves-light"
+                            onclick="saveThemeOptions('option-from')">
+                        保存设置
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-color panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">打赏二维码设置</h3>
+            </div>
+            <div class="panel-body">
+				<div class="form-group">
+                    <label class="col-md-3 control-label">支付宝打赏</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="alipay"
+                               value="${options.alipay ?! theme_url('/static/images/alipay.jpg')}" placeholder="侧边栏个人介绍">
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-md-3 control-label">微信打赏</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="weixinpay"
+                               value="${options.weixinpay ?! theme_url('/static/images/weixinpay.jpg')}" placeholder="侧边栏个人介绍">
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-md-3 control-label">QQ打赏</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="qqpay"
+                               value="${options.qqpay ?! theme_url('/static/images/qqpay.jpg')}" placeholder="侧边栏个人介绍">
+                    </div>
+                </div>
+				<div class="clearfix pull-right">
+                    <button type="button" class="btn btn-primary waves-effect waves-light"
+                            onclick="saveThemeOptions('option-from')">
+                        保存设置
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>	
+    <div class="clearfix"></div>
+    <div class="col-md-6">
+        <div class="panel panel-color panel-inverse">
+            <div class="panel-heading">
+                <h3 class="panel-title">个性化设置</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">微博账号</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="fa_weibo"
+                               value="${options.fa_weibo ?! 'zoujiayu'}"
+                               placeholder="微博账号，不输入则不显示">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Github账号</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="fa_github"
+                               value="${options.fa_github ?! ''}" placeholder="Github账号，不输入则不显示">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Twitter账号</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="fa_twitter"
+                               value="${options.fa_twitter ?! ''}" placeholder="Twitter账号，不输入则不显示">
+                    </div>
+                </div>
+				 <div class="form-group">
+                    <label class="col-md-3 control-label">facebook账号</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="fa_facebook"
+                               value="${options.fa_facebook ?! ''}" placeholder="facebook账号，不输入则不显示">
+                    </div>
+                </div>
+				 <div class="form-group">
+                    <label class="col-md-3 control-label">QQ账号</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="fa_qq"
+                               value="${options.fa_qq ?! ''}" placeholder="QQ账号，不输入则不显示">
+                    </div>
+                </div>
+                <div class="clearfix pull-right">
+                    <button type="button" class="btn btn-inverse waves-effect waves-light"
+                            onclick="saveThemeOptions('option-from')">
+                        保存设置
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+#end
+#include ("/comm/ts_base_layout.html")
