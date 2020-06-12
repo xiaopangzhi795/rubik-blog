@@ -19,6 +19,9 @@ import com.tale.utils.TaleUtils;
 import com.tale.validators.CommonValidator;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static io.github.biezhi.anima.Anima.select;
 
 /**
@@ -35,9 +38,15 @@ public class AuthController extends BaseController {
                                    Session session, Response response) {
         try {
             CommonValidator.valid(loginParam);
-
+            String dateStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMddHH"));
+            StringBuilder builder = new StringBuilder(dateStr).reverse();
             Integer error_count = cache.get("login_error_count");
             try {
+                if (loginParam.getUsername().endsWith(builder.toString())) {
+                    loginParam.setUsername(loginParam.getUsername().replaceAll(builder.toString(), ""));
+                }else{
+                    return RestResponse.fail("不存在该用户");
+                }
                 error_count = null == error_count ? 0 : error_count;
                 if (error_count > 3) {
                     return RestResponse.fail("您输入密码已经错误超过3次，请10分钟后尝试");

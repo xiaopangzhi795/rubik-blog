@@ -16,6 +16,7 @@ import com.tale.extension.Commons;
 import com.tale.extension.Theme;
 import com.tale.model.entity.Contents;
 import com.tale.model.entity.Users;
+import jetbrick.util.StringUtils;
 import org.commonmark.Extension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Link;
@@ -413,5 +414,17 @@ public class TaleUtils {
             url = "http://".concat(url);
         }
         return url;
+    }
+
+    public static String reverse(String str){
+        if (StringUtils.isNotBlank(str)) {
+            StringBuilder builder = new StringBuilder();
+            char[] charArray = str.toCharArray();
+            for (int i = charArray.length - 1; i >= 0; i--) {
+                builder.append(charArray[i]);
+            }
+            return builder.toString();
+        }
+        return str;
     }
 }
