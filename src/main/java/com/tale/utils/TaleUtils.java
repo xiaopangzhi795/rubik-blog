@@ -81,6 +81,32 @@ public class TaleUtils {
     }
 
     /**
+     * 获取某个数字是否在指定区间内。   区间包含关系。
+     * 例如  13 是否在 20-40之间   return 13>=20&&13<=40
+     * 例如  13 是否在 10 右边       return 13>=10
+     * 例如  13  是否在 20 左边     return  13 <=20
+     * @param num           要判断的数字
+     * @param sideLeft      左边区间，可以为空。
+     * @param sideRight     右边区间，可以为空。
+     * @return
+     */
+    public static boolean getNumSide(Integer num, Integer sideLeft, Integer sideRight) {
+        if (num != null) {
+            if (sideLeft == null && sideRight != null) {
+                return num < sideRight;
+            } else if (sideLeft != null && sideRight == null) {
+                return num > sideLeft;
+            } else if (sideLeft != null && sideRight != null) {
+                return num >= sideLeft && num <= sideRight;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    /**
      * 返回当前登录用户
      *
      * @return

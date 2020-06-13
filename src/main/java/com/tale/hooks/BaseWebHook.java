@@ -86,8 +86,12 @@ public class BaseWebHook implements WebHook {
                 request.session().attribute(TaleConst.LOGIN_SESSION_KEY, user);
             }
         }
+        String hostConfig = optionsService.getOption("hostConfig");
+        if ((!host.contains("geek45") || host.contains(":9000")) && (!host.contains("localhost") && !host.contains("127.0.0.1"))) {
+            response.redirect("https://www.geek45.com/");
+            return false;
+        }
         if (uri.startsWith(TaleConst.ADMIN_URI) && !uri.startsWith(TaleConst.LOGIN_URI)) {
-            String hostConfig = optionsService.getOption("hostConfig");
             if (StringUtils.isNotBlank(hostConfig)) {
                 if (!host.startsWith(hostConfig)) {
                     response.redirect(TaleConst.ERROR_403);
@@ -99,6 +103,14 @@ public class BaseWebHook implements WebHook {
                 return false;
             }
             request.attribute(TaleConst.PLUGINS_MENU_NAME, TaleConst.PLUGIN_MENUS);
+        }else{
+            //如果不是管理页面
+            if (!uri.startsWith(TaleConst.ADMIN_URI) && StringUtils.isNotBlank(hostConfig)) {
+                if (host.startsWith(hostConfig) && !uri.startsWith("/403")) {
+                    response.redirect(TaleConst.ERROR_403);
+                    return false;
+                }
+            }
         }
         return true;
     }
