@@ -18,10 +18,12 @@ import com.tale.service.CommentsService;
 import com.tale.service.ContentsService;
 import com.tale.service.SiteService;
 import com.tale.utils.HttpClientUtil;
+import com.tale.utils.TaleUtils;
 import com.tale.validators.CommonValidator;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
+import jetbrick.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -56,6 +58,44 @@ public class ArticleController extends BaseController {
         return this.render_403();
     }
 
+    /**
+     * 空气质量
+     * 0－50、51－100、101－150、151－200、201－300和大于300六档
+     *
+     * 优  良  轻度污染  中度污染   重度污染   严重污染
+     * @param qualityNum
+     * @return
+     */
+    private String getQuality(String qualityNum) {
+        Integer num = -1;
+        if (StringUtils.isNotBlank(qualityNum)) {
+            try {
+                num = Integer.valueOf(qualityNum);
+            } catch (NumberFormatException e) {
+                return "未知";
+            }
+        }
+        if (TaleUtils.getNumSide(num, 0, 50)) {
+            return "优";
+        }
+        if (TaleUtils.getNumSide(num, 51, 100)) {
+            return "良";
+        }
+        if (TaleUtils.getNumSide(num, 101, 150)) {
+            return "轻度污染";
+        }
+        if (TaleUtils.getNumSide(num, 151, 200)) {
+            return "中度污染";
+        }
+        if (TaleUtils.getNumSide(num, 201, 300)) {
+            return "重度污染";
+        }
+        if (TaleUtils.getNumSide(num, 300, null)) {
+            return "严重污染";
+        }
+        return "未知";
+    }
+
     @GetRoute(value = {"/userInfo"})
     @JSON
     public RestResponse<String> getInfo(Request request){
@@ -82,8 +122,9 @@ public class ArticleController extends BaseController {
                         data = result.getJSONObject("data");
                         userInfo.append("\r\n").append("湿度：").append(data.getString("humi"))
                                 .append("  天气：").append(data.getString("info"))
-                                .append("  温度：").append(data.getString("quality")).append("~").append(data.getString("temp"))
+                                .append("  温度：").append(data.getString("temp")).append("  空气指数：").append(getQuality(data.getString("quality"))).append("[" + data.getString("quality") + "]")
                                 .append("  ").append(data.getString("wind"));
+
                     }
                 }
             }else{

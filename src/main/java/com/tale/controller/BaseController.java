@@ -5,7 +5,11 @@ import com.blade.mvc.http.Request;
 import com.tale.model.entity.Users;
 import com.tale.utils.MapCache;
 import com.tale.utils.TaleUtils;
+import jetbrick.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * Created by biezhi on 2017/2/21.
@@ -36,23 +40,39 @@ public abstract class BaseController {
 
     }
 
-    public String getIpAddr(Request request) {
-        log.info(JSONObject.toJSONString(request));
-        String ip = request.header("x-forwarded-for");
-        if(ip == null || ip.length() == 0 ||"unknown".equalsIgnoreCase(ip)) {
-            ip = request.header("Proxy-Client-IP");
+    public String getIpAddr(Request request) throws UnknownHostException {
+        String Xip = request.header("X-Real-ip");
+        String XFor = request.header("X-Forwarded-For");
+        if (StringUtils.isNotBlank(Xip) && !"unKnown".equalsIgnoreCase(XFor)) {
+            //多次反向代理后会有多个ip值，第一个ip才是真实ip
+            int index = XFor.indexOf(",");
+            if (index != -1) {
+                return XFor.substring(0, index);
+            } else {
+                return XFor;
+            }
         }
-        if(ip == null || ip.length() == 0 ||"unknown".equalsIgnoreCase(ip)) {
-            ip = request.header("WL-Proxy-Client-IP");
+        XFor = Xip;
+        if (StringUtils.isNotBlank(XFor)&& !"unKnown".equalsIgnoreCase(XFor)) {
+            return XFor;
         }
-        if(ip == null || ip.length() == 0 ||"unknown".equalsIgnoreCase(ip)) {
-            ip = request.remoteAddress();
+        if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
+            XFor = request.header("Proxy-Client-IP");
         }
-        log.info(request.header("x-forwarded-for"));
-        log.info(request.header("Proxy-Client-IP"));
-        log.info(request.header("WL-Proxy-Client-IP"));
-        log.info(request.header("X-Real-IP"));
-        return ip;
+        if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
+            XFor = request.header("WL-Proxy-Client-IP");
+        }
+        if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
+            XFor = request.header("HTTP_CLIENT_IP");
+        }
+        if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
+            XFor = request.header("HTTP_X_FORWARDED_FOR");
+        }
+        if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
+            XFor = InetAddress.getLocalHost().getHostAddress();
+
+        }
+        return XFor;
     }
 
     public Users user() {
