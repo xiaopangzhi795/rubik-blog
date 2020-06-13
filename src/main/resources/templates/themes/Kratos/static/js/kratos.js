@@ -12,14 +12,30 @@
 		});
 		
 		$('.qrcode').each(function(index, el) {
-			var url = $(this).data('url');
-			if ($.fn.qrcode) {
-				$(this).qrcode({
-					text: url,
-					width: 150,
-					height: 150,
-				});
-			}
+			// console.log("123321s")
+			// $("#qrcode").load("https://cli.im/api/qrcode/code?text=${permalink()}&mhid=thHGXwG9zMMhMHYuKdJdPKg");
+			// $.ajax(
+			// 	{
+			// 		url: "https://cli.im/api/qrcode/code?text=${permalink()}&mhid=thHGXwG9zMMhMHYuKdJdPKg",
+			// 		type: "get",
+			// 		dataType: "text",
+			// 		contentType: "application/json; charset=utf-8",
+			// 		success: function (data) {
+			// 			if (data) {
+			// 				console.log(data)
+			// 				var html = $(data).find("img");
+			// 				$("#qrcode").html(html);
+			// 			}
+			// 		}
+			// 	});
+			// var url = $(this).data('url');
+			// if ($.fn.qrcode) {
+			// 	$(this).qrcode({
+			// 		text: url,
+			// 		width: 150,
+			// 		height: 150,
+			// 	});
+			// }
 		});
 	}
 	
