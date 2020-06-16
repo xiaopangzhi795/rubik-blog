@@ -82,6 +82,18 @@
 						$("#resume").click();
 					}
 				});
+
+				var content = $(".kratos-post-content a");
+				content.css("text-decoration-line", "underline");
+				content.css("text-decoration-color", "#78CBF7");
+				content.css("color", "#78CBF7");
+				$('.kratos-post-content a').bind('html propertychange', function() {
+					var content = $(".kratos-post-content a");
+					content.css("text-decoration-line", "underline");
+					content.css("text-decoration-color", "#78CBF7");
+					content.css("color", "#78CBF7");
+				});
+
 			})
 
 		</script>
