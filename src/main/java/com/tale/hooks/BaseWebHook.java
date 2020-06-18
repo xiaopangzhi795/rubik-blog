@@ -87,12 +87,12 @@ public class BaseWebHook implements WebHook {
             }
         }
         String hostConfig = optionsService.getOption("hostConfig");
-        if ((!host.contains("geek45") || host.contains(":9000")) && (!host.contains("localhost") && !host.contains("127.0.0.1"))) {
+        if ((!host.contains("geek45") || host.contains(":9000")) && !isLocal(host)) {
             response.redirect("https://www.geek45.com/");
             return false;
         }
         if (uri.startsWith(TaleConst.ADMIN_URI) && !uri.startsWith(TaleConst.LOGIN_URI)) {
-            if (StringUtils.isNotBlank(hostConfig)) {
+            if (StringUtils.isNotBlank(hostConfig) && !isLocal(host)) {
                 if (!host.startsWith(hostConfig)) {
                     response.redirect(TaleConst.ERROR_403);
                     return false;
@@ -105,7 +105,7 @@ public class BaseWebHook implements WebHook {
             request.attribute(TaleConst.PLUGINS_MENU_NAME, TaleConst.PLUGIN_MENUS);
         }else{
             //如果不是管理页面
-            if (!uri.startsWith(TaleConst.ADMIN_URI) && StringUtils.isNotBlank(hostConfig)) {
+            if (!isLocal(host) && !uri.startsWith(TaleConst.ADMIN_URI) && StringUtils.isNotBlank(hostConfig)) {
                 if (host.startsWith(hostConfig) && !uri.startsWith("/403")) {
                     response.redirect(TaleConst.ERROR_403);
                     return false;
@@ -113,6 +113,10 @@ public class BaseWebHook implements WebHook {
             }
         }
         return true;
+    }
+
+    private boolean isLocal(String host) {
+        return StringUtils.isNotBlank(host) && (host.contains("localhost") || host.contains("127.0.0.1"));
     }
 
 }
