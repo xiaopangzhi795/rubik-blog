@@ -1746,9 +1746,12 @@ a.comment-reply-link:hover{
 	padding-left:30px
 }
 
+#aside222{
+	overflow: auto;
+}
+
 .tab-content{
 	margin:0 0 -18px;
-	padding-bottom: 5px;
 	height: 250px;
 	overflow: auto;
 }
@@ -2788,7 +2791,7 @@ img.size-smiley{
 
 #footer{
 	background:#23282D;
-	padding:40px 0 30px
+	padding:20px 0 20px
 }
 
 #footer p{

@@ -71,10 +71,10 @@
 				</div>
 			</div>
 		</aside>
-		<aside id="directoryLis" class="widget widget_categories clearfix" style="display: none">
+		<aside id="directoryLis" class="widget clearfix" style="display: none;">
 			<h4 class="widget-title">本页目录</h4>
-			<div id="directory-content" class="tab-pane fade">
-				<div id="directory">
+			<div id="directory-content" class="tab-pane fade in active">
+				<div id="directory" style="overflow: auto">
 				</div>
 			</div>
 		</aside>
@@ -96,20 +96,61 @@
 </aside>
 <script>
 	var top2 = $("#aside222").offset().top;
-	var height = document.body.clientHeight;
-	$(".tab-content").css("height", height * 0.20);
+	var height = $(window).height();
+	if ($("#directoryLis").css("display") == "none") {
+		$(".tab-content").css("height", height * 0.55);
+	}else{
+		$(".tab-content").css("height", height * 0.25);
+		$("#directory").css("height", height * 0.3);
+	}
+	var footerTop = $("#respond").height() + 28 + $("#respond").offset().top - $(window).height();
+	console.log("footerTop" + footerTop);
 	window.onresize = function(){
-		height = document.body.clientHeight;
-		$(".tab-content").css("height", height * 0.20);
+		height = $(window).height();
+		footerTop = $("#respond").height() + 28 + $("#respond").offset().top - $(window).height();
+		if ($("#directoryLis").css("display") == "none") {
+			$(".tab-content").css("height", height * 0.55);
+		}else{
+			$(".tab-content").css("height", height * 0.25);
+			$("#directory").css("height", height * 0.3);
+		}
 	}
 	$(window).scroll(function() {
 		//为了保证兼容性，这里取两个值，哪个有值取哪一个
 		//scrollTop就是触发滚轮事件时滚轮的高度
 		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		if (footerTop == 0) {
+			footerTop = $("#respond").height() + 28 + $("#respond").offset().top - $(window).height();
+		}
+		var ss = 0;
+		if (footerTop < scrollTop) {
+			footerTop = $("#respond").height() + 28 + $("#respond").offset().top - $(window).height();
+			ss = footerTop - scrollTop;
+			if (ss < (28 + $("#respond").height())) {
+				ss = 0;
+			}
+		}else{
+			ss = 0;
+		}
 		if ((top2 - 5) < scrollTop) {
-			$("#aside222").css("margin-top", scrollTop - top2);
+			$("#aside222").css("margin-top", scrollTop - top2 + ss);
 		} else {
 			$("#aside222").css("margin-top", 0);
+		}
+		if ($("#directoryLis").css("display") == "none") {
+			$(".tab-content").css("height", height * 0.55);
+		}else{
+			$(".tab-content").css("height", height * 0.25);
+			$("#directory").css("height", height * 0.3);
+		}
+	})
+
+	$(function () {
+		if ($("#directoryLis").css("display") == "none") {
+			$(".tab-content").css("height", height * 0.55);
+		}else{
+			$(".tab-content").css("height", height * 0.25);
+			$("#directory").css("height", height * 0.3);
 		}
 	})
 
@@ -117,7 +158,6 @@
 #if(is_post)
 <script>
 	$("#directoryLis").show();
-	$("#directoryLi").show()
 	$(document).ready(function () {
 		$('#directory').html('');
 		var postDirectoryBuild = function() {
@@ -208,8 +248,9 @@
 			createPostDirectory(document.getElementsByClassName('kratos-post-content'),document.getElementById('directory'), true);
 		};
 		postDirectoryBuild();
-		$("#directoryA").click()
+		if ($("#directory ul").html() == "") {
+			$("#directoryLis").hide();
+		}
 	})
-
 </script>
 #end
