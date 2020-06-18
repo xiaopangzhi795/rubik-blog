@@ -16,6 +16,7 @@
 						<div class="container">
 							<div class="row">
 								<div class="col-md-6 col-md-offset-3 footer-list text-center">
+									<span style="float: left"><wb:follow-button uid="3992966739" type="red_2" width="136" height="24" ></wb:follow-button></span>
 									<p class="kratos-social-icons">
 									#if(not_empty(theme_option('fa_weibo')))
 										<a target="_blank" rel="nofollow" href="http://weibo.com/${theme_option('fa_weibo')}"><i class="fa fa-weibo"></i></a>
@@ -34,9 +35,9 @@
 										#end
 										<a target="_blank" rel="nofollow" href="mailto:${login_user.email ?! 'kaifengqzl@outlook.com'}"><i class="fa fa-envelope-o"></i></a>
 										<a rel="nofollow" id="checkInfo" href="javascript:void(0)"><i class="fa fa-signal"></i></a>
-									</p>
-									<p> &copy; 2020 <a href="${site_url()}/">${site_title()}</a>. All Rights Reserved. <br/>
-									<a target="_blank" rel="nofollow" id="resume"><i class="fa fa-star">GET&nbsp;resume</i></a> <br/> <br/>
+									<p> &copy; 2020 <a href="${site_url()}/">${site_title()}</a>. All Rights Reserved.
+									<a target="_blank" rel="nofollow" id="resume"><i class="fa fa-star">GET&nbsp;resume</i></a>
+									 <br/>
 										<img src="${theme_url('/static/images/icon-police.png')}">&nbsp;&nbsp;
 										<a href="http://www.beian.miit.gov.cn" target="_blank">${site_option('site_filing')}</a> | 内容如有侵权，请联系站长删除
 										</a></p>

@@ -126,8 +126,40 @@ article a{
 	color:#333
 }
 
-table,table tbody tr th{
-	text-align:center!important
+table,table thead tr th,table tbody tr td{
+	text-align:center!important;
+}
+
+table{
+	width: 100%;
+}
+
+table {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+
+table thead tr th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+
+table tbody tr td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+}
+tr:hover{
+	color: white;
+	background-color: #e0dede!important;
 }
 
 .panel-body{

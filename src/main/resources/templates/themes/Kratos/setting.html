@@ -41,10 +41,10 @@
                     </div>
                 </div>
 				<div class="form-group">
-                    <label class="col-md-3 control-label">网站背景颜色</label>
+                    <label class="col-md-3 control-label">网站背景图片</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" name="site_colour"
-                               value="${options.site_colour ?! ''}" placeholder="请输入颜色代码,如#ffffff">
+                               value="${options.site_colour ?! theme_url('/static/images/bg.jpg')}}" placeholder="网站背景图片,如http://localhost:9000/upload/2020/06/5v431ta0fag52qdd096ef5n5gl.jpg">
                     </div>
                 </div>
 				<div class="form-group">

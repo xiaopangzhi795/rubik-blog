@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" xmlns:wb="http://open.weibo.com/wb">
 	<head>
 		<meta charset="UTF-8">
 		<title>${head_title()} ${site_subtitle()}</title>
@@ -16,7 +16,7 @@
 		<link rel='stylesheet' id='superfish-style-css'  href='${theme_url('/static/css/superfish.min.css?ver=r7')}' type='text/css' media='all' />
 		<link rel='stylesheet' id='layer-css'  href='${theme_url('/static/css/layer.min.css?ver=2.6')}' type='text/css' media='all' />
 		<link rel='stylesheet' id='kratos-style-css'  href='${theme_url('/static/css/style.css?ver=2.6')}' type='text/css' media='all' />
-		
+		<script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 		<script type='text/javascript' src="${theme_url('/static/js/jquery.min.js?ver=2.1.4')}"></script>
 		<link href="${theme_url('/static/css/popModal.min.css')}" rel="stylesheet">
 		<script src="${theme_url('/static/js/popModal.min.js')}"></script>
@@ -32,7 +32,10 @@
 						<div class="container">
 							<div class="nav-header">
 									<a href="#" class="js-kratos-nav-toggle kratos-nav-toggle"><i></i></a>
-									<h1 id="kratos-logo"><a href="${site_url()}/">${site_title()}</a></h1>
+									<h1 id="kratos-logo">
+										<a href="${site_url()}/">${site_title()}</a>
+									</h1>
+
 								<nav id="kratos-menu-wrap" class="menu-menu-container">
 									<ul id="kratos-primary-menu" class="sf-menu">
 									<li><a href="javascript:void(0)" style="color: red" class="content">${theme_option('adstitlecontent')}</a></li>
@@ -80,4 +83,9 @@
 				</div>
 				</div>
 				</div>
-<div id="kratos-blog-post" style="background:${theme_option('site_colour')}">
+
+			#if(theme_option('background_image_url') == "")
+					<div id="kratos-blog-post" style="background-image:url(${theme_url('/static/images/bg.jpg')});baibackground-size:cover">
+			#else
+						<div id="kratos-blog-post" style="background-image:url(${theme_option('site_colour')});baibackground-size:cover">
+			#end
