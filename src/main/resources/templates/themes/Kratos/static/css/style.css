@@ -127,7 +127,6 @@ article a{
 }
 
 table,table thead tr th,table tbody tr td{
-	text-align:center!important;
 }
 
 table{
@@ -1748,7 +1747,10 @@ a.comment-reply-link:hover{
 }
 
 .tab-content{
-	margin:0 0 -18px
+	margin:0 0 -18px;
+	padding-bottom: 5px;
+	height: 250px;
+	overflow: auto;
 }
 
 .tab-content .list-group a:last-child,.widget_kratos_poststab .tab-content .list-group a:nth-last-child(2){
@@ -3288,7 +3290,7 @@ img.size-smiley{
 }
 
 #sidebar{
-	margin-bottom:10px
+	margin-bottom:10px;
 }
 
 .affix-top{
