@@ -245,7 +245,7 @@ public class AdminApiController extends BaseController {
                 return RestResponse.fail("不存在该评论");
             }
             Users users = this.user();
-            comments.setAuthor(users.getUsername());
+            comments.setAuthor(users.getScreenName());
             comments.setAuthorId(users.getUid());
             comments.setCid(c.getCid());
             comments.setIp(request.address());
