@@ -6,7 +6,7 @@
 
 `Tale` uses a lightweight mvc framework [Blade](https://github.com/biezhi/blade) for development, the default theme using a beautiful [pinghsu](https://github.com/chakhsu/pinghsu), if you think this project is good, please support it [star]((https://github.com/otale/tale/stargazers)).
 
-demo website：https://tale.biezhi.me
+demo website：https://www.geek45.com
 
 [![Build Status](https://img.shields.io/travis/otale/tale.svg?style=flat-square)](https://travis-ci.org/otale/tale)
 [![License](https://img.shields.io/badge/license-MIT-4EB1BA.svg?style=flat-square)](https://github.com/otale/tale/blob/master/LICENSE)
